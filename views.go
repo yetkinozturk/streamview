@@ -36,27 +36,25 @@ func pkgConfigView(w http.ResponseWriter, r *http.Request) {
 	homeTemplate.Execute(w, "")
 }
 
-func httpRouteConfig(udpPort string) {
+func (sv *StreamView) webSock(w http.ResponseWriter, r *http.Request) {
+	var upgrader = websocket.Upgrader{}
+
+	c, err := upgrader.Upgrade(w, r, nil)
+	_check(err)
+	defer c.Close()
+
+	//fmt.Println("starting stream channel")
+	for pkg := range sv.netChan {
+		PKGFormat(&pkg)
+		//fmt.Println(pkg.message)
+		err = c.WriteMessage(websocket.TextMessage, []byte(pkg.message))
+		_check(err)
+	}
+}
+
+func (sv *StreamView) httpRouteConfig() {
 	http.HandleFunc("/pkgconfig", pkgConfigView)
 	http.HandleFunc("/stats", statsView)
 	http.HandleFunc("/", indexView)
-
-	http.HandleFunc("/streamview",
-		func(w http.ResponseWriter, r *http.Request) {
-			var upgrader = websocket.Upgrader{}
-			net_stream := make(chan item)
-			go StreamReceive(net_stream, udpPort)
-
-			c, err := upgrader.Upgrade(w, r, nil)
-			_check(err)
-			defer c.Close()
-
-			//fmt.Println("starting stream channel")
-			for pkg := range net_stream {
-				PKGFormat(&pkg)
-				//fmt.Println(pkg.message)
-				err = c.WriteMessage(websocket.TextMessage, []byte(pkg.message))
-				_check(err)
-			}
-		})
+	http.HandleFunc("/streamview", sv.webSock)
 }

@@ -1,5 +1,5 @@
 package main
 
-func PKGFormat(pkg *item) {
+func PKGFormat(pkg *netMessages) {
 
 }

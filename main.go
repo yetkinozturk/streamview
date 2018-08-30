@@ -8,14 +8,16 @@ import (
 )
 
 func main() {
+
+	flag.Parse()
+	log.SetFlags(0)
+
 	if len(os.Args) != 3 {
 		fmt.Println("Usage: ./streamview udpport httpport")
 		return
 	}
-	udpPort := os.Args[1]
-	httpPort := os.Args[2]
-	flag.Parse()
-	log.SetFlags(0)
-	httpRouteConfig(udpPort)
-	log.Fatal(netStarter(httpPort))
+
+	streamView := NewStreamView(os.Args[1], os.Args[2])
+	log.Fatal(streamView.start())
+
 }

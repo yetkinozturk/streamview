@@ -8,27 +8,42 @@ import (
 	"time"
 )
 
-func StreamReceive(c chan item, udpPort string) {
+func (sv *StreamView) startUDPServices() {
 
-	ServerAddr, err := net.ResolveUDPAddr("udp", ":"+udpPort)
+	ServerAddr, err := net.ResolveUDPAddr("udp", ":"+sv.udpPort)
 	_check(err)
-	fmt.Println("listening on :" + udpPort)
+
+	fmt.Println("listening UDP on :" + sv.udpPort)
 
 	ServerConn, err := net.ListenUDP("udp", ServerAddr)
-	_check(err)
+
 	defer ServerConn.Close()
 
 	buf := make([]byte, 1024)
 
 	for {
 		n, addr, err := ServerConn.ReadFromUDP(buf)
-		c <- item{string(buf[0:n]), *addr, time.Now()}
 		_check(err)
+		sv.netChan <- netMessages{string(buf[0:n]), *addr, time.Now()}
 	}
 }
 
-func netStarter(port string) error {
-	var addr = flag.String("addr", "localhost:"+port, "http service address")
+func (sv StreamView) httpStarter() error {
+	sv.httpRouteConfig()
+	var addr = flag.String("addr", "localhost:"+sv.httpPort, "http service address")
+	fmt.Println("listening HTTP on :" + sv.httpPort)
 	err := http.ListenAndServe(*addr, nil)
+
+	return err
+}
+
+func (sv *StreamView) start() error {
+
+	go sv.startUDPServices()
+
+	//go func() {
+	err := sv.httpStarter()
+	//}()
+
 	return err
 }
