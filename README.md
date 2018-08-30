@@ -1,6 +1,7 @@
 # streamview
 Convert UDP Streams to Configurable HTTP Presentations
-:construction: :warning:	 :construction: :warning:
+
+:construction: :warning:	 :construction: :warning: Development/Prototyping phase.
 
 # Build:
   make deps
