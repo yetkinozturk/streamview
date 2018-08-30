@@ -1,22 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
-	if len(os.Args) == 0 {
+	if len(os.Args) != 3 {
 		fmt.Println("Usage: ./streamview udpport httpport")
 		return
 	}
-	//udp_port := os.Args[1]
-	http_port := os.Args[2]
+	udpPort := os.Args[1]
+	httpPort := os.Args[2]
 	flag.Parse()
 	log.SetFlags(0)
-	httpRouteConfig()
-	log.Fatal(netStarter(http_port))
+	httpRouteConfig(udpPort)
+	log.Fatal(netStarter(httpPort))
 }
-

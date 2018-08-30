@@ -1,21 +1,21 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net"
-	"time"
-	"flag"
 	"net/http"
+	"time"
 )
 
-func StreamReceive(c chan item) {
+func StreamReceive(c chan item, udpPort string) {
 
-	ServerAddr, err := net.ResolveUDPAddr("udp", ":7778")
-	_check (err)
-	fmt.Println("listening on :7778")
+	ServerAddr, err := net.ResolveUDPAddr("udp", ":"+udpPort)
+	_check(err)
+	fmt.Println("listening on :" + udpPort)
 
 	ServerConn, err := net.ListenUDP("udp", ServerAddr)
-	_check (err)
+	_check(err)
 	defer ServerConn.Close()
 
 	buf := make([]byte, 1024)
@@ -23,12 +23,12 @@ func StreamReceive(c chan item) {
 	for {
 		n, addr, err := ServerConn.ReadFromUDP(buf)
 		c <- item{string(buf[0:n]), *addr, time.Now()}
-		_check (err)
+		_check(err)
 	}
 }
 
-func netStarter(port string)  error{
-		var addr = flag.String("addr", "localhost:8080", "http service address")
-		err := http.ListenAndServe(*addr, nil)
-		return err
+func netStarter(port string) error {
+	var addr = flag.String("addr", "localhost:"+port, "http service address")
+	err := http.ListenAndServe(*addr, nil)
+	return err
 }
