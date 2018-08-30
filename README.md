@@ -1,7 +1,7 @@
 # streamview
 Convert UDP Streams to Configurable HTTP Presentation
 
-:construction: :warning:	 :construction: :warning: Development/Prototyping phase.
+:construction: :warning:	 :construction: :warning: Development/Prototyping phase. Expect dragons.
 
 # Build:
   make deps
@@ -24,7 +24,7 @@ nc -l -u localhost 7778
 
 # Motivation
 
-Almost every device supports UDP.  Implementing complex protocols on devices is extremely expensive and difficult.  With this kind of function as service approach, external presentation layer can be used by this devices. 
+Almost every device supports UDP.  Implementing complex protocols on devices is extremely expensive and difficult.  With this kind of function as a service approach, external presentation layer can be used by this devices. 
 
 # Use cases
 * Displaying sensor data on web or mobile devices.
