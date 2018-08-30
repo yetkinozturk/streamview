@@ -9,11 +9,11 @@ Convert UDP Streams to Configurable HTTP Presentation
   make
 
 # Example Usage:
-./streamview 7778 8080
+./streamview 7778 8000
 
 # Connect via netcat
 
-nc -l -u localhost 7778
+nc -u localhost 7778
 
 # TODO
 
