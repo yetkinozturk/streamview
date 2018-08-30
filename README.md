@@ -3,8 +3,9 @@ Convert UDP Streams to Configurable HTTP Presentations
 :construction: :warning:	 :construction: :warning:
 
 # Build:
-make deps
-make
+  make deps
+  
+  make
 
 # Example Usage:
 ./streamview 7778 8080
