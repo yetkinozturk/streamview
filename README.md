@@ -18,3 +18,5 @@ nc -l -u localhost 7778
 
 * Stats
 * Configurable UDP Package Serializations
+
+![(LITL)](diagram.svg)
