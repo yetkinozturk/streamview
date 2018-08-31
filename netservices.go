@@ -39,11 +39,11 @@ func (sv StreamView) httpStarter() error {
 
 func (sv *StreamView) start() error {
 
-	go sv.startUDPServices()
-
 	//go func() {
+	go sv.startUDPServices()
+	//}()	
 	err := sv.httpStarter()
-	//}()
+	
 
 	return err
 }

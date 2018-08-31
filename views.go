@@ -8,53 +8,48 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-// IndexView present index.html with WS.
-func indexView(w http.ResponseWriter, r *http.Request) {
-
-	content, err := ioutil.ReadFile("index.html")
-	_check(err)
-	var homeTemplate = template.Must(template.New("").Parse(string(content)))
-	homeTemplate.Execute(w, "ws://"+r.Host+"/streamview")
+func (sv *StreamView) httpRouteConfig() {
+	http.HandleFunc("/", sv.indexView)
+	http.HandleFunc("/pkgconfig", sv.pkgConfigView)
+	http.HandleFunc("/stats", sv.statsView)
+	http.HandleFunc("/streamview", sv.webSock)
 }
 
-// statsView show stream traffic statistics.
-func statsView(w http.ResponseWriter, r *http.Request) {
+func (sv *StreamView)indexView(w http.ResponseWriter, r *http.Request) {
 
-	content, err := ioutil.ReadFile("stats.html")
+	content, err := ioutil.ReadFile("templates/index.html")
 	_check(err)
-	var homeTemplate = template.Must(template.New("").Parse(string(content)))
-	homeTemplate.Execute(w, "")
+	var indexTemplate = template.Must(template.New("").Parse(string(content)))
+	indexTemplate.Execute(w, "ws://"+r.Host+"/streamview")
 }
 
-// pkgConfigView configures presentation of recevied UDP Messages on websocket.
-// It is useful for custom serialization
-func pkgConfigView(w http.ResponseWriter, r *http.Request) {
+func (sv *StreamView)statsView(w http.ResponseWriter, r *http.Request) {
 
-	content, err := ioutil.ReadFile("config.html")
+	content, err := ioutil.ReadFile("templates/stats.html")
 	_check(err)
-	var homeTemplate = template.Must(template.New("").Parse(string(content)))
-	homeTemplate.Execute(w, "")
+	var statsTemplate = template.Must(template.New("").Parse(string(content)))
+	statsTemplate.Execute(w, "")
+}
+
+func (sv *StreamView)pkgConfigView(w http.ResponseWriter, r *http.Request) {
+
+	content, err := ioutil.ReadFile("templates/config.html")
+	_check(err)
+	var configTemplate = template.Must(template.New("").Parse(string(content)))
+	configTemplate.Execute(w, "")
 }
 
 func (sv *StreamView) webSock(w http.ResponseWriter, r *http.Request) {
 	var upgrader = websocket.Upgrader{}
-
 	c, err := upgrader.Upgrade(w, r, nil)
 	_check(err)
 	defer c.Close()
 
-	//fmt.Println("starting stream channel")
 	for pkg := range sv.netChan {
 		PKGFormat(&pkg)
-		//fmt.Println(pkg.message)
 		err = c.WriteMessage(websocket.TextMessage, []byte(pkg.message))
 		_check(err)
 	}
 }
 
-func (sv *StreamView) httpRouteConfig() {
-	http.HandleFunc("/pkgconfig", pkgConfigView)
-	http.HandleFunc("/stats", statsView)
-	http.HandleFunc("/", indexView)
-	http.HandleFunc("/streamview", sv.webSock)
-}
+
