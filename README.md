@@ -15,6 +15,9 @@ Convert UDP Streams to Configurable HTTP Presentation
 
 nc -u localhost 7778
 
+# See tests:
+tests/push100K.go
+
 # TODO
 
 * Stats
