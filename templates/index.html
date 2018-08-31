@@ -9,7 +9,9 @@ window.addEventListener("load", function(evt) {
     var output = document.getElementById("output");
     var input = document.getElementById("input");
     var ws;
-    
+    var msgLimit  = 10;
+    var msgCounter = 0;
+
     if (ws) {
         return false;
     }
@@ -28,9 +30,20 @@ window.addEventListener("load", function(evt) {
     }
 
     var print = function(message) {
+        
         var d = document.createElement("div");
         d.innerHTML = message;
-        output.appendChild(d);
+
+        if (msgCounter < msgLimit) {
+            output.appendChild(d);
+            msgCounter+=1;
+        } else {
+            msgCounter = 0;
+            while (output.firstChild) {
+                output.removeChild(output.firstChild);
+            }
+            output.appendChild(d);
+        }
     };
 });
 
