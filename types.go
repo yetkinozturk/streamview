@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net"
 	"time"
 )
@@ -26,17 +25,3 @@ type SamplePKG struct {
 	values    []float32
 }
 
-// _check  Terminate recv on error
-func _check(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func NewStreamView(udpPort string, httpPort string) *StreamView {
-	sv := new(StreamView)
-	sv.netChan = make(chan netMessages)
-	sv.udpPort = udpPort
-	sv.httpPort = httpPort
-	return sv
-}

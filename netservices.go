@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (sv *StreamView) startUDPServices() {
+func (sv *StreamView) udpStarter() {
 
 	ServerAddr, err := net.ResolveUDPAddr("udp", ":"+sv.udpPort)
 	_check(err)
@@ -40,7 +40,7 @@ func (sv StreamView) httpStarter() error {
 func (sv *StreamView) start() error {
 
 	//go func() {
-	go sv.startUDPServices()
+	go sv.udpStarter()
 	//}()	
 	err := sv.httpStarter()
 	

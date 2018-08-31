@@ -17,7 +17,7 @@ func main() {
 		return
 	}
 
-	streamView := NewStreamView(os.Args[1], os.Args[2])
-	log.Fatal(streamView.start())
+	app := NewStreamView(os.Args[1],os.Args[2])
+	log.Fatal(app.start())
 
 }
