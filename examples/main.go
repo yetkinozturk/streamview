@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/yetkinozturk/streamview"
+	sv "github.com/yetkinozturk/streamview"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 		return
 	}
 
-	app := NewStreamView(os.Args[1],os.Args[2])
-	log.Fatal(app.start())
+	app := sv.NewStreamView(os.Args[1],os.Args[2])
+	log.Fatal(app.Start())
 
 }

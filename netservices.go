@@ -37,7 +37,7 @@ func (sv StreamView) httpStarter() error {
 	return err
 }
 
-func (sv *StreamView) start() error {
+func (sv *StreamView) Start() error {
 
 	//go func() {
 	go sv.udpStarter()

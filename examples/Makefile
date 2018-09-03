@@ -4,7 +4,7 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
-BINARY_NAME=stream_view
+BINARY_NAME=app
 BINARY_UNIX=$(BINARY_NAME)_unix
 
 all: build
