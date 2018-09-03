@@ -4,7 +4,7 @@ GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
-BINARY_NAME=streamview
+BINARY_NAME=stream_view
 BINARY_UNIX=$(BINARY_NAME)_unix
 
 all: build
@@ -21,6 +21,7 @@ run:
 		./$(BINARY_NAME)
 deps:
 		$(GOGET) github.com/gorilla/websocket
+		$(GOGET) github.com/yetkinozturk/streamview
 
 
 # Cross compilation

@@ -1,4 +1,4 @@
-package main
+package streamview
 
 func PKGFormat(pkg *netMessages) {
 
