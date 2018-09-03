@@ -1,28 +1,54 @@
 # streamview
 Convert UDP Streams to Configurable HTTP Presentation
 
-:construction: :warning:	 :construction: :warning: Development/Prototyping phase. Expect dragons.
+:construction: :warning:	 Expect dragons.
 
-# Build:
-cd examples
-  
-make deps
+# Installation:
 
-make
+```bash
+go get github.com/gorilla/websocket
+go get github.com/yetkinozturk/streamview
+```
 
-# Example Usage:
-cd examples
+# Usage:
 
-./app 7778 8000
+```golang
+package main
 
-# See tests:
+import (
+	"flag"
+	"fmt"
+	"log"
+	"os"
+
+	sv "github.com/yetkinozturk/streamview"
+)
+
+func main() {
+
+	flag.Parse()
+	log.SetFlags(0)
+
+	if len(os.Args) != 3 {
+		fmt.Println("Usage: ./streamview udpport httpport")
+		return
+	}
+
+	app := sv.NewStreamView(os.Args[1],os.Args[2])
+	log.Fatal(app.Start())
+
+}
+```
+
+# Tests/Example Usage:
+
+examples/main.go
 
 tests/push100K.go
 
-# Connect via netcat
+# Usage via netcat
 
 nc -u localhost 7778
-
 
 # TODO
 
