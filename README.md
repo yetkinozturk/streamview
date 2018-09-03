@@ -4,19 +4,25 @@ Convert UDP Streams to Configurable HTTP Presentation
 :construction: :warning:	 :construction: :warning: Development/Prototyping phase. Expect dragons.
 
 # Build:
-  make deps
+cd examples
   
-  make
+make deps
+
+make
 
 # Example Usage:
-./streamview 7778 8000
+cd examples
+
+./app 7778 8000
+
+# See tests:
+
+tests/push100K.go
 
 # Connect via netcat
 
 nc -u localhost 7778
 
-# See tests:
-tests/push100K.go
 
 # TODO
 
