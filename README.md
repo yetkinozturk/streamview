@@ -8,6 +8,7 @@ Convert UDP Streams to Configurable HTTP Presentation
 ```bash
 go get github.com/gorilla/websocket
 go get github.com/yetkinozturk/streamview
+cp -rf $GOPATH/src/github.com/yetkinozturk/streamview/templates/ <your project dir>
 ```
 
 # Usage:
