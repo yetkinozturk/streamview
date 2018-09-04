@@ -6,9 +6,9 @@ Convert UDP Streams to Configurable HTTP Presentation
 # Installation:
 
 ```bash
-go get github.com/gorilla/websocket
-go get github.com/yetkinozturk/streamview
-cp -rf $GOPATH/src/github.com/yetkinozturk/streamview/templates <your project dir>
+copy examples/main.go and Makefile to your project
+make deps
+make
 ```
 
 # Usage:
@@ -42,6 +42,8 @@ func main() {
 ```
 
 # Tests/Example Usage:
+
+cd examples
 
 examples/main.go
 
